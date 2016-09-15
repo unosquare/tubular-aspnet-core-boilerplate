@@ -1,0 +1,91 @@
+﻿<div>
+    <tb-grid server-url="/api/thing/paged" page-size="20" server-save-url="/api/thing"
+             grid-name="things"
+             server-save-method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <tb-grid-pager class="col-md-6"></tb-grid-pager>
+                    <div class="col-md-3">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-success" ng-click="$parent.$ctrl.newRow('/popups/newThing.html', true)">
+                                <i class="fa fa-plus-square"></i>&nbsp;Add
+                            </button>
+                            <tb-print-button title="Things" class="btn-group">
+                            </tb-print-button>
+                            <tb-export-button filename="things.csv" class="btn-group">
+                            </tb-export-button>
+                        </div>
+                    </div>
+                    <tb-text-search class="col-md-3" css="input-sm" placeholder="search..."></tb-text-search>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-rounded">
+                            <tb-grid-table class="table-bordered table-hover table-striped responsive-mobile">
+                                <tb-column-definitions>
+                                    <tb-column name="Id" column-type="numeric" sortable="true"
+                                               is-key="true" searchable="false" class="column-md"
+                                               sort-direction="Ascending" sort-order="1" visible="true">
+                                        <tb-column-filter></tb-column-filter>
+                                        <tb-column-header>{{label}}</tb-column-header>
+                                    </tb-column>
+                                    <tb-column name="Name" column-type="string" sortable="true"
+                                               searchable="true"
+                                               sort-direction="" sort-order="0" visible="true">
+                                        <tb-column-filter></tb-column-filter>
+                                        <tb-column-header>{{label}}</tb-column-header>
+                                    </tb-column>
+                                    <tb-column name="Amount" column-type="numeric" sortable="true"
+                                               sort-direction="" sort-order="0" visible="true">
+                                        <tb-column-filter></tb-column-filter>
+                                        <tb-column-header>{{label}}</tb-column-header>
+                                    </tb-column>
+                                    <tb-column name="Date" column-type="datetime" sortable="true"
+                                               sort-direction="" sort-order="0" visible="true">
+                                        <tb-column-date-time-filter></tb-column-date-time-filter>
+                                        <tb-column-header>{{label}}</tb-column-header>
+                                    </tb-column>
+                                </tb-column-definitions>
+                                <tb-row-set>
+                                    <tb-row-template ng-show="$parent.$component.isEmpty">
+                                        <tb-cell-template class="text-center" colspan="{{$component.visibleColumns()}}">
+                                            <b>No data</b>
+                                        </tb-cell-template>
+                                    </tb-row-template>
+                                    <tb-row-template ng-repeat="row in $component.rows" row-model="row" selectable="false">
+                                        <tb-cell-template column-name="Id" class="text-center cell-menu">
+                                            <div class="btn-group">
+                                                <a class="btn btn-default btn-xs"
+                                                   ng-click="row.editPopup('/ui/popups/editThing.html', 'lg')">
+                                                    {{row.Id}}
+                                                </a>
+                                                <tb-remove-button model="row">
+                                                </tb-remove-button>
+                                            </div>
+                                        </tb-cell-template>
+                                        <tb-cell-template column-name="Name">
+                                            {{row.Name}}
+                                        </tb-cell-template>
+                                        <tb-cell-template column-name="Amount">
+                                            {{row.Amount | number: 2}}
+                                        </tb-cell-template>
+                                        <tb-cell-template column-name="Date">
+                                            {{row.Date}}
+                                        </tb-cell-template>
+                                    </tb-row-template>
+                                </tb-row-set>
+                            </tb-grid-table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <tb-grid-pager class="col-md-6 col-xs-12"></tb-grid-pager>
+                    <tb-page-size-selector class="col-md-3 col-xs-6" selectorcss="input-sm">
+                    </tb-page-size-selector>
+                    <tb-grid-pager-info class="col-md-3 col-xs-6"></tb-grid-pager-info>
+                </div>
+            </div>
+        </div>
+    </tb-grid>
+</div>

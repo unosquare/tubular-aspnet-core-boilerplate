@@ -1,0 +1,9 @@
+[
+  {
+    "outputFileName": "wwwroot/scripts/bundle.js",
+    "inputFiles": [
+      "wwwroot/scripts/app.js",
+      "wwwroot/scripts/login.controller.js"
+    ]
+  }
+]

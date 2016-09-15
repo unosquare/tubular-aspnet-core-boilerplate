@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ng="http://angularjs.org/" lang="en" ng-app="app">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title ng-controller="titleCtrl" ng-bind="content">Tubular</title>
+
+    <!-- CSS (from CDN) -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/latest/lumen/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/latest/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/tubular/latest/tubular-bundle.min.css" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- JS (from CDN) -->
+    <script src="//cdn.jsdelivr.net/g/angularjs(angular.min.js+angular-animate.min.js+angular-route.min.js),angular.bootstrap@2.1.2(ui-bootstrap.min.js+ui-bootstrap-tpls.min.js),blob.js(Blob.js),filesaver.js"></script>
+    <script src="//cdn.jsdelivr.net/g/tubular"></script>
+    <script src="//npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.1.5/angular-local-storage.min.js"></script>
+
+    <script src="/scripts/bundle.js"></script>
+</head>
+
+<body>
+    <header class="navbar navbar-default navbar-static-top" id="top" role="banner">
+        <div class="container" ng-controller="navCtrl">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button"
+                        data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="/">
+                    Tubular
+                </a>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav" ng-hide="isAnonymousView">
+                    <li ng-repeat="menu in menus | filter: {Name: ''}" uib-dropdown>
+                        <a href="#" uib-dropdown-toggle>
+                            {{menu.Name}}&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <li ng-repeat="item in menu.Menus" ng-if="item.IsVisible"><a href="{{item.Url}}">{{item.Name}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-hide="isAnonymousView">
+                    <li uib-dropdown>
+                        <a href="#" class="dropdown-toggle" uib-dropdown-toggle
+                           title="{{roles}}">
+                            {{user}}&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                            <li><a href="#" ng-click="logout()">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <ng-view></ng-view>
+    </div>
+</body>
+</html>
