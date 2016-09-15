@@ -2,7 +2,7 @@
          server-save-url="/api/thing">
     <div class="modal-header">
         <button type="button" class="close" ng-click="closePopup()"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title">Edit thing {{Model.Date}}</h3>
+        <h3 class="modal-title">Edit thing</h3>
     </div>
     <div class="modal-body">
         <tb-simple-editor name="Name" show-label="true"
@@ -13,7 +13,7 @@
                            placeholder=""
                            required="true"
                            read-only="false"></tb-numeric-editor>
-        <tb-date-time-editor name="Date" show-label="true"></tb-date-time-editor>
+        <tb-date-editor name="Date" show-label="true"></tb-date-editor>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="savePopup()"

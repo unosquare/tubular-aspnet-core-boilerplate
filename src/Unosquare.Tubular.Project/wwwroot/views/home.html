@@ -41,7 +41,7 @@
                                         <tb-column-filter></tb-column-filter>
                                         <tb-column-header>{{label}}</tb-column-header>
                                     </tb-column>
-                                    <tb-column name="Date" column-type="datetime" sortable="true"
+                                    <tb-column name="Date" column-type="datetimeutc" sortable="true"
                                                sort-direction="" sort-order="0" visible="true">
                                         <tb-column-date-time-filter></tb-column-date-time-filter>
                                         <tb-column-header>{{label}}</tb-column-header>
@@ -57,7 +57,7 @@
                                         <tb-cell-template column-name="Id" class="text-center cell-menu">
                                             <div class="btn-group">
                                                 <a class="btn btn-default btn-xs"
-                                                   ng-click="row.editPopup('/ui/popups/editThing.html', 'lg')">
+                                                   ng-click="row.editPopup('/popups/editThing.html', 'lg')">
                                                     {{row.Id}}
                                                 </a>
                                                 <tb-remove-button model="row">
@@ -71,7 +71,7 @@
                                             {{row.Amount | number: 2}}
                                         </tb-cell-template>
                                         <tb-cell-template column-name="Date">
-                                            {{row.Date}}
+                                            {{row.Date | date}}
                                         </tb-cell-template>
                                     </tb-row-template>
                                 </tb-row-set>
