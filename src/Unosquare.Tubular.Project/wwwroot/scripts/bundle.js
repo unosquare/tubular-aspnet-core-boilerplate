@@ -3,14 +3,26 @@
 
     angular.module('app.controllers', ['tubular.services', 'tubular.models'])
         .run(function ($rootScope) {
-            $rootScope.$on('handleEmit', function (event, args) {
-                $rootScope.$broadcast('handleBroadcast', args);
-            });
-
             $rootScope.$on('titleEmit', function (event, args) {
                 $rootScope.$broadcast('titleBroadcast', args);
             });
-        });
+        }).controller('genericCtrl',
+            function ($scope, alerts, $routeParams, toastr) {
+                $scope.$on('tbGrid_OnConnectionError',
+                    function (event, error) {
+                        alerts.defaultErrorHandler(error, true);
+                    });
+
+                $scope.$on('tbForm_OnConnectionError',
+                    function (event, error) {
+                        alerts.defaultErrorHandler(error, true);
+                    });
+
+                $scope.$on('tbForm_OnSuccessfulSave',
+                    function (event, data) {
+                        toastr.success(data || "Updated");
+                    });
+            });
 
     angular.module('app', [
         'ngRoute',
