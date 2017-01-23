@@ -5,5 +5,11 @@
       "wwwroot/scripts/app.js",
       "wwwroot/scripts/login.controller.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/tubular-bundle.min.css",
+    "inputFiles": [
+      "wwwroot/assets/tubular-bundle.css"
+    ]
   }
 ]
