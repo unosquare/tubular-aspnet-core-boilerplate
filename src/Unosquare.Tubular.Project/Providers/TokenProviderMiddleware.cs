@@ -7,6 +7,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Unosquare.Swan.Formatters;
 
 namespace Unosquare.Tubular.Project.Providers
 {
@@ -94,8 +95,10 @@ namespace Unosquare.Tubular.Project.Providers
             if (!context.Request.Method.Equals("POST")
                 || !context.Request.HasFormContentType)
             {
+                var error = SerializeError("Bad request.");
                 context.Response.StatusCode = 400;
-                return context.Response.WriteAsync("Bad request.");
+                context.Response.ContentLength = error.Length;
+                return context.Response.WriteAsync(error);
             }
 
             _logger.LogInformation("Handling request: " + context.Request.Path);
@@ -111,8 +114,10 @@ namespace Unosquare.Tubular.Project.Providers
             var identity = await _options.IdentityResolver(username, password);
             if (identity == null)
             {
+                var error = SerializeError("Invalid username or password.");
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Invalid username or password.");
+                context.Response.ContentLength = error.Length;
+                await context.Response.WriteAsync(error);
                 return;
             }
 
@@ -194,5 +199,14 @@ namespace Unosquare.Tubular.Project.Providers
         /// <returns>Seconds since Unix epoch.</returns>
         public static long ToUnixEpochDate(DateTime date)
             => new DateTimeOffset(date).ToUniversalTime().ToUnixTimeSeconds();
+
+        private static string SerializeError(string description)
+        {
+            return Json.Serialize(new
+            {
+                error = "invalid_grant",
+                error_description = description
+            });
+        }
     }
 }
