@@ -14,6 +14,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Unosquare.Swan.AspNetCore;
 using Unosquare.Tubular.Project.Providers;
 
 namespace Unosquare.Tubular.Project
@@ -45,55 +46,22 @@ namespace Unosquare.Tubular.Project
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
             // Route all unknown requests to app root
-            app.Use(async (context, next) =>
-            {
-                await next();
+            app.UseFallback("/index.html");
 
-                // If there's no available file and the request doesn't contain an extension, we're probably trying to access a page.
-                // Rewrite request to use app root
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = "/index.html"; // Put your Angular root page here 
-                    await next();
-                }
-            });
-
-            app.UseExceptionHandler(errorApp =>
-            {
-                errorApp.Run(async context =>
-                {
-                    context.Response.StatusCode = 500; // or another Status accordingly to Exception Type
-                    context.Response.ContentType = "application/json";
-
-                    var error = context.Features.Get<IExceptionHandlerFeature>();
-
-                    if (error != null)
-                    {
-                        var ex = error.Error;
-                        var innerEx = (ex as AggregateException);
-                        var message = $"Main Exception: {ex}";
-
-                        if (innerEx != null)
-                        {
-                            message = innerEx.InnerExceptions.Aggregate(message,
-                                (current, inner) => current + $"\r\nInner Exception: {inner}");
-                        }
-
-                        await context.Response.WriteAsync(message, Encoding.UTF8);
-                    }
-                });
-            });
+            app.UseJsonExceptionHandler();
 
             app.UseDefaultFiles();
 
-            // Replace with a valid key
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ZZZZZZZZZZZZZZZZZZZZZZZZ"));
             var tokenOptions = new TokenValidationParameters
             {
                 // The signing key must match!
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
+                // Replace with a valid key
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ZZZZZZZZZZZZZZZZZZZZZZZZ")),
 
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
@@ -110,35 +78,19 @@ namespace Unosquare.Tubular.Project
                 ClockSkew = TimeSpan.Zero
             };
 
-            app.UseMiddleware<TokenProviderMiddleware>(Options.Create(new TokenProviderOptions
+            app.UseBearerTokenProvider(tokenOptions, (username, password, granType, clientId) =>
             {
-                Audience = tokenOptions.ValidAudience,
-                Issuer = tokenOptions.ValidIssuer,
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = (userName, password) =>
+                // TODO: Replace with your implementation
+                var isLogged = (username == "Admin" && password == "pass.word");
+                if (!isLogged)
                 {
-                    // TODO: Replace with your implementation
-                    var isLogged = (userName == "Admin" && password == "pass.word");
-                    if (!isLogged)
-                    {
-                        return Task.FromResult<ClaimsIdentity>(null);
-                    }
-
-                    var identity = new ClaimsIdentity();
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userName));
-                    return Task.FromResult(identity);
+                    return Task.FromResult<ClaimsIdentity>(null);
                 }
-            }));
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenOptions
+                var identity = new ClaimsIdentity();
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, username));
+                return Task.FromResult(identity);
             });
-
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseMvc();
