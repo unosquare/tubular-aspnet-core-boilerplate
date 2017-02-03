@@ -45,7 +45,11 @@
                             {{menu.Name}}&nbsp;<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <li ng-repeat="item in menu.Menus" ng-if="item.IsVisible"><a href="{{item.Url}}">{{item.Name}}</a></li>
+                            <li ng-repeat="item in menu.Menus" ng-if="item.IsVisible">
+                                <a href="{{item.Url}}">
+                                    {{item.Name}}
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
