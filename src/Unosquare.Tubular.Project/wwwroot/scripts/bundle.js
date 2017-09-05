@@ -29,6 +29,7 @@
         'tubular',
         'ui.bootstrap',
         'app.controllers',
+        "LocalStorageModule",
         'toastr'
     ]).config([
         '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -95,10 +96,13 @@
                 }
                 $scope.loading = true;
 
-                tubularHttp.authenticate($scope.username, $scope.password, $scope.redirectHome, function (error) {
+                tubularHttp.authenticate($scope.username, $scope.password)
+                    .then(function () {
+                        $location.path("/");                        
+                    }, function (error) {
                     $scope.loading = false;
                     toastr.error(error);
-                }, true);
+                }); 
             };
 
             $scope.redirectHome = function () {

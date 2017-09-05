@@ -11,5 +11,11 @@
     "inputFiles": [
       "wwwroot/assets/tubular-bundle.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/scripts/bundle.min.min.js",
+    "inputFiles": [
+      "wwwroot/scripts/bundle.min.js"
+    ]
   }
 ]
