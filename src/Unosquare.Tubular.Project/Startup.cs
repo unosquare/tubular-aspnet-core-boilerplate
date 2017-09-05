@@ -23,34 +23,8 @@ namespace Unosquare.Tubular.Project
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
-        }
 
-        public IConfigurationRoot Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // Add framework services.
-            services.AddAuthentication();
-            services.AddCors();
-            services.AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            // Route all unknown requests to app root
-            app.UseFallback("/index.html");
-
-            app.UseJsonExceptionHandler();
-
-            app.UseDefaultFiles();
-
-            var tokenOptions = new TokenValidationParameters
+            tokenOptions = new TokenValidationParameters
             {
                 // The signing key must match!
                 ValidateIssuerSigningKey = true,
@@ -71,8 +45,36 @@ namespace Unosquare.Tubular.Project
                 // If you want to allow a certain amount of clock drift, set that here:
                 ClockSkew = TimeSpan.Zero
             };
+        }
 
-            app.UseBearerTokenProvider(tokenOptions, (username, password, granType, clientId) =>
+        public IConfigurationRoot Configuration { get; }
+        private TokenValidationParameters tokenOptions { get; set; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            // Add framework services.
+            services.AddBearerTokenAuthentication(tokenOptions);
+
+            services.AddCors();
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
+            // Route all unknown requests to app root
+            app.UseFallback("/index.html");
+
+            app.UseJsonExceptionHandler();
+
+            app.UseDefaultFiles();
+
+            app.UseBearerTokenAuthentication(tokenOptions, (username, password, granType, clientId) =>
             {
                 // TODO: Replace with your implementation
                 var isLogged = (username == "Admin" && password == "pass.word");
