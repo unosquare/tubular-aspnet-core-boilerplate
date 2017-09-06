@@ -12,7 +12,6 @@ init:
 before_build:
 - appveyor-retry dotnet restore -v Minimal
 - npm cache clean
-- npm install -g gulp
 - cd C:\projects\tubular-aspnet-core-boilerplate\src\Unosquare.Tubular.Project
 - npm install
 build_script:
