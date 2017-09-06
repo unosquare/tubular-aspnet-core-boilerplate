@@ -12,7 +12,7 @@ init:
 before_build:
 - appveyor-retry dotnet restore -v Minimal
 - npm cache clean
-- npm install -g gulp
+- npm install
 build_script:
 - dotnet build src\Unosquare.Tubular.Project -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 cache:
