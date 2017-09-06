@@ -1,21 +1,9 @@
-[
+﻿[
   {
     "outputFileName": "wwwroot/scripts/bundle.js",
     "inputFiles": [
       "wwwroot/scripts/app.js",
       "wwwroot/scripts/login.controller.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/assets/tubular-bundle.min.css",
-    "inputFiles": [
-      "wwwroot/assets/tubular-bundle.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/scripts/bundle.min.min.js",
-    "inputFiles": [
-      "wwwroot/scripts/bundle.min.js"
     ]
   }
 ]

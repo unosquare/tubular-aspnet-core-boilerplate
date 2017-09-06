@@ -8,6 +8,10 @@
     <PackageId>Unosquare.Tubular.Project</PackageId>
   </PropertyGroup>
 
+  <Target Name="MyPreCompileTarget" BeforeTargets="Build">
+    <Exec Command="gulp min" />
+  </Target>
+  
   <ItemGroup>
     <None Update="wwwroot\**\*;Views;Areas\**\Views">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
