@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <Target Name="MyPreCompileTarget" BeforeTargets="Build">
-    <Exec Command="gulp min" />
+    <Exec Command="node_modules/.bin/gulp min" />
   </Target>
   
   <ItemGroup>
