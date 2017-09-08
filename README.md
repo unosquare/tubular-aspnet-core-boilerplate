@@ -2,7 +2,7 @@
 
 *:star:Please star this project if you find it useful!*
 
-# Tubular ASP.NET Core 1.1 Boilerplate
+# Tubular ASP.NET Core 2.0 Boilerplate
 
 Tubular Directives Boilerplate (includes AngularJS and Bootstrap). If you want to know more about Tubular, visit [Tubular at GitHub](http://unosquare.github.io/tubular/#/), even you can generate new grids and forms with our online tools.
 
