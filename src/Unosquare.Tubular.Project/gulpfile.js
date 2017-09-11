@@ -7,7 +7,15 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify"),
     merge = require("merge-stream"),
     del = require("del"),
-    bundleconfig = require("./bundleconfig.json");
+    bundleconfig = [
+        {
+            "outputFileName": "wwwroot/scripts/bundle.js",
+            "inputFiles": [
+                "wwwroot/scripts/app.js",
+                "wwwroot/scripts/login.controller.js"
+            ]
+        }
+    ];
 
 var regex = {
     css: /\.css$/,

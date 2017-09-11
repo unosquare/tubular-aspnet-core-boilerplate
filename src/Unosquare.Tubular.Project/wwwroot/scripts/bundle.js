@@ -29,7 +29,7 @@
         'tubular',
         'ui.bootstrap',
         'app.controllers',
-        "LocalStorageModule",
+        'LocalStorageModule',
         'toastr'
     ]).config([
         '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
