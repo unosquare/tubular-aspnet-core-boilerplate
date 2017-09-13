@@ -30,11 +30,47 @@
                 $location.path("/");
             }
         }).controller('navCtrl',
-        function ($scope, $route, $location, tubularHttp) {
+        function ($scope, $route, $location, tubularHttp, $window) {
             $scope.user = 'username';
-            $scope.menus = [];
             $scope.isRunning = false;
             $scope.isAnonymousView = true;
+            $window.localStorage.menus = angular.toJson([
+                {
+                    'Name': 'Sections',
+                    'Menus': [
+                        {
+                            'IsVisible': true,
+                            'Name': 'Section 1',
+                            'Url': '#'
+                        },
+                        {
+                            'IsVisible': false,
+                            'Name': 'Section 2',
+                            'Url': '#'
+                        }
+                    ]
+                },
+                {
+                    'Name': 'Articles',
+                    'Menus': [
+                        {
+                            'IsVisible': true,
+                            'Name': 'Article 1',
+                            'Url': '#'
+                        }
+                    ]
+                },
+                {
+                    'Name': 'Extras',
+                    'Menus': [
+                        {
+                            'IsVisible': true,
+                            'Name': 'Extra 1',
+                            'Url': '#'
+                        }
+                    ]
+                },
+            ]);
 
             $scope.$on('$routeChangeSuccess', function () {
                 $scope.key = $route.current.title;
@@ -46,6 +82,7 @@
                 } else if (tubularHttp.isAuthenticated()) {
                     $scope.user = tubularHttp.userData.username;
                     $scope.roles = tubularHttp.userData.role;
+                    $scope.menus = angular.fromJson($window.localStorage.menus);
 
                     $scope.subheader = null;
                     $scope.pageTitle = $scope.key;
