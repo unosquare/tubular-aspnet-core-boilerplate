@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app.controllers').controller('loginCtrl',
-        function ($scope, $location, tubularHttp, localStorageService, $uibModal, $routeParams, toastr) {
+        function ($scope, $location, tubularHttp, $uibModal, $routeParams, toastr) {
             $scope.loading = false;
             $scope.tokenReset = $routeParams.token;
 
@@ -30,7 +30,7 @@
                 $location.path("/");
             }
         }).controller('navCtrl',
-        function ($scope, $route, $location, tubularHttp, localStorageService) {
+        function ($scope, $route, $location, tubularHttp) {
             $scope.user = 'username';
             $scope.menus = [];
             $scope.isRunning = false;
@@ -46,7 +46,6 @@
                 } else if (tubularHttp.isAuthenticated()) {
                     $scope.user = tubularHttp.userData.username;
                     $scope.roles = tubularHttp.userData.role;
-                    $scope.menus = angular.fromJson(localStorageService.get('menus'));
 
                     $scope.subheader = null;
                     $scope.pageTitle = $scope.key;
