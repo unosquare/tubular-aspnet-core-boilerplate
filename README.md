@@ -12,4 +12,4 @@ Developing with ASP.NET classic? Use the [Tubular Boilerplate C#](https://github
 
 ### Authentication
 
-To use the sample authenticatio please login with User **Admin** and Password **pass.word**.
+To use the sample authentication please login with User **Admin** and Password **pass.word**.
