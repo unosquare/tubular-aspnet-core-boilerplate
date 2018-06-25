@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Unosquare.Swan.AspNetCore;
-
-namespace Unosquare.Tubular.Project
+﻿namespace Unosquare.Tubular.Project
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.IdentityModel.Tokens;
+    using Newtonsoft.Json.Serialization;
+    using System;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Unosquare.Swan.AspNetCore;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -22,6 +22,7 @@ namespace Unosquare.Tubular.Project
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
 
             tokenOptions = new TokenValidationParameters
