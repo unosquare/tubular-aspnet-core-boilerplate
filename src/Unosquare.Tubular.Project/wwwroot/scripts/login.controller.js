@@ -7,15 +7,15 @@
             $scope.tokenReset = $routeParams.token;
 
             $scope.submitForm = function () {
-                if (!$scope.username || !$scope.password || $scope.username.trim() == '' || $scope.password.trim() == '') {
-                    toastr.error("", "You need to fill in a username and password");
+                if (!$scope.username || !$scope.password || $scope.username.trim() === '' || $scope.password.trim() === '') {
+                    toastr.error('', 'You need to fill in a username and password');
                     return;
                 }
                 $scope.loading = true;
 
                 tubularHttp.authenticate($scope.username, $scope.password)
                     .then(function () {
-                        $location.path("/");                        
+                        $location.path('/');                        
                     }, function (error) {
                     $scope.loading = false;
                     toastr.error(error);
@@ -27,7 +27,7 @@
             };
 
             if (tubularHttp.isAuthenticated()) {
-                $location.path("/");
+                $location.path('/');
             }
         }).controller('navCtrl',
         function ($scope, $route, $location, tubularHttp, $window) {
@@ -74,11 +74,11 @@
 
             $scope.$on('$routeChangeSuccess', function () {
                 $scope.key = $route.current.title;
-                $scope.content = $scope.key + " - Tubular";
+                $scope.content = $scope.key + ' - Tubular';
                 $scope.isAnonymousView = $route.current.title == 'Login';
 
-                if ($scope.isAnonymousView == false && tubularHttp.isAuthenticated() == false) {
-                    $location.path("/Login");
+                if (!$scope.isAnonymousView && !tubularHttp.isAuthenticated()) {
+                    $location.path('/Login');
                 } else if (tubularHttp.isAuthenticated()) {
                     $scope.user = tubularHttp.userData.username;
                     $scope.roles = tubularHttp.userData.role;
@@ -87,7 +87,7 @@
                     $scope.subheader = null;
                     $scope.pageTitle = $scope.key;
 
-                    $scope.content = $scope.pageTitle + " -Tubular";
+                    $scope.content = $scope.pageTitle + ' -Tubular';
                     $scope.$emit('titleEmit', $scope.pageTitle);
                 }
             });
@@ -101,7 +101,7 @@
         }).controller('titleCtrl', function ($scope, $route) {
             $scope.$on('$routeChangeSuccess', function () {
                 $scope.key = $route.current.title;
-                $scope.content = $scope.key + " - Tubular";
+                $scope.content = $scope.key + ' - Tubular';
             });
-        });;
+        });
 })();
