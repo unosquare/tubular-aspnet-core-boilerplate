@@ -3,9 +3,11 @@
 
 ![Tubular](http://unosquare.github.io/tubular/assets/tubular.png)
 
+# Tubular ASP.NET Core 2.0 Boilerplate
+
 :star: *Please star this project if you find it useful!*
 
-# Tubular ASP.NET Core 2.0 Boilerplate
+**Important** - This repository has been archived. We are not longer maintaining this project. Please check Tubular for [Angular.io](https://github.com/unosquare/tubular2) or [React](https://github.com/unosquare/tubular-react).
 
 Please visit the [Tubular GitHub Page](http://unosquare.github.io/tubular) to learn how quickly you can start coding. See [Related projects](#related-projects) below to discover more Tubular libraries and backend solutions.
 
