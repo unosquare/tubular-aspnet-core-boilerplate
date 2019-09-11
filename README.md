@@ -1,7 +1,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3aa6b09ffde5478fb5c7f5b657c9de97)](https://app.codacy.com/app/UnosquareLabs/tubular-aspnet-core-boilerplate?utm_source=github.com&utm_medium=referral&utm_content=unosquare/tubular-aspnet-core-boilerplate&utm_campaign=Badge_Grade_Settings)
 [![Build status](https://ci.appveyor.com/api/projects/status/cms93sj6mkglb9w9?svg=true)](https://ci.appveyor.com/project/geoperez/tubular-aspnet-core-boilerplate)
 
-![Tubular](http://unosquare.github.io/tubular/assets/tubular.png)
+![Tubular](http://unosquare.github.io/tubular-angular/assets/tubular.png)
 
 # Tubular ASP.NET Core 2.0 Boilerplate
 
